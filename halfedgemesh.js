@@ -94,7 +94,7 @@ class HFace {
      */
     getArea() {
         let area = 0.0;
-        // TODO: Fill this in (you can use mini assignment 1 to help)
+        
         // Remember, there are n-2 triangles in an n-gon
         let vertices = this.getVertices();
         
@@ -116,7 +116,6 @@ class HFace {
 
             area = vec3.length(crossproduct) / 2;
 
-            //console.log("Calculated area:", area);
             return area;
         }
     }
@@ -128,8 +127,7 @@ class HFace {
      */
     getNormal() {
         let normal = vec3.create();
-        // TODO: Fill this in
-        
+
         let vertices = this.getVertices();
 
         let a = vertices[0].pos;
@@ -142,9 +140,7 @@ class HFace {
         vec3.subtract(ac, c, a);
 
         vec3.cross(normal, ab, ac);
-        //vec3.normalize(normal, normal);
-        
-        //console.log("Calculated norm:", normal);
+
         return normal;
     }
 }
@@ -176,7 +172,7 @@ class HVertex {
         if (this.h === null) {
             return [];
         }
-        // TODO: Fill this in (a do while loop works well)
+
         let h = this.h;
         let neighbors = [];
 
@@ -199,7 +195,6 @@ class HVertex {
         if (this.h === null) {
             return [];
         }
-        // TODO: Fill this in (this is very similar to getVertexNeighbors)
 
         let h = this.h; // Start with the half-edge associated with this vertex
         let faces = []; // Initialize an array to store the incident faces
@@ -235,12 +230,7 @@ class HVertex {
      * @returns {vec3} The estimated normal
      */
     getNormal() {
-        // TODO: This is a dummy value that makes all normals (1, 0, 0)
-        // just so something shows up.  You should actually initialize it to (0, 0, 0)
-        // and accumulate neighboring face normals in a loop for your average
         let normal = vec3.fromValues(0, 0, 0); 
-        // TODO: Fill this in 
-        // Hint: use this.getAttachedFaces(), face.getArea(), and face.getNormal() to help
         
         // get faces connected to the particular vertex
         let faces = this.getAttachedFaces();
@@ -324,6 +314,7 @@ class HedgeMesh extends PolyMesh {
         let I = new Uint32Array(NumTris*3);
         let i = 0;
         let faceIdx = 0;
+        
         //Now copy over the triangle indices
         while (i < NumTris) {
             let verts = allvs[faceIdx]
@@ -417,6 +408,7 @@ class HedgeMesh extends PolyMesh {
         }
 
         let str2Hedge = {};
+        
         // Step 3: Add faces and halfedges
         for (let i = 0; i < res['faces'].length; i++) {
             const face = new HFace();
@@ -528,8 +520,6 @@ class HedgeMesh extends PolyMesh {
      * @param {boolean} smooth If true, smooth.  If false, sharpen
      */
     laplacianSmoothSharpen(smooth) {
-        // TODO: Fill this in
-
         // create a new list of vertex positions and then copy them over at the end
         //// so that neighboring vertex positions don't change as you're iterating
         const newPositions = [];
@@ -586,8 +576,6 @@ class HedgeMesh extends PolyMesh {
      */
     getBoundaryCycles() {
         let cycles = [];
-        // TODO: Fill this in (hint: Add a variable to an edge which
-        // stores whether this edge has been checked yet)
         const edges = this.edges;
 
         for (let edge of edges) {
@@ -617,8 +605,7 @@ class HedgeMesh extends PolyMesh {
      */
     getGenus() {
         let genus = -1;
-        // TODO: Fill this in (hint: there are two half edges for every edge!)
-
+        
         // check if watertight
         const boundaryCycles = this.getBoundaryCycles();
         if (boundaryCycles.length > 0) {
@@ -651,8 +638,6 @@ class HedgeMesh extends PolyMesh {
     makeTriangle() {
         let mesh = new HedgeMesh();
         
-        // TODO: Finish this (we'll fill this in in class)
-        // Fill in mesh.vertices, mesh.edges, and mesh.faces
         let v1 = new HVertex([0, 0, 0], [0.5, 0.5, 0.5]);
         v1.ID = 0;
         let v2 = new HVertex([1, 0, 0], [0.5, 0.5, 0.5]);
@@ -716,7 +701,6 @@ class HedgeMesh extends PolyMesh {
      */
     makeTetrahedron() {
         let mesh = new HedgeMesh();
-        
         // TODO: Fill this in
         mesh.needsDisplayUpdate = true;
         return mesh;
